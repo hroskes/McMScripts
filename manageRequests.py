@@ -379,7 +379,7 @@ def createRequests(requests, num_requests, doDryRun, useDev):
 
         if not doDryRun:
             answer = mcm.putA('requests', new_req) # Create request
-            if answer['results']:
+            if answer and answer['results']:
                 # Cannot fill generator parameters while creating a new request
                 # Modify newly created request with generator parameters
                 # Get newly created request
@@ -409,7 +409,7 @@ def createRequests(requests, num_requests, doDryRun, useDev):
                     print "\033[0;33m{0} created but generator parameters not set\033[0;m".format(
                         answer['prepid'])
             else:
-                if reqFields.useDataSetname():
+                if reqFields.useDataSetName():
                     print "\033[0;31m{0} failed to be created\033[0;m".format(
                         reqFields.getDataSetName())
                 else:

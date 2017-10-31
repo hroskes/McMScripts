@@ -54,10 +54,10 @@ class Request:
         self.McMFrag_ = x
         self.useMcMFrag_ = True
     def setTime(self,x):
-        self.Time_ = float(x)
+        self.Time_ = [float(x)]
         self.useTime_ = True
     def setSize(self,x):
-        self.Size_ = float(x)
+        self.Size_ = [float(x)]
         self.useSize_ = True
     def setTag(self,x):
         self.Tag_ = x
