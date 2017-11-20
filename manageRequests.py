@@ -282,7 +282,9 @@ def fillFields(csvfile, fields, campaign, PWG, notCreate_, McMTags):
         if fields[7] > -1:
             tmpReq.setTag(row[fields[7]])
         if fields[8] > -1:
-            tmpReq.setGen(row[fields[8]].split(" ")) # Multiple generators separated by spaces
+            generators = re.split(r"(?<!\\) ", row[fields[8]])       #Multiple generators separated by spaces, 
+            generators = [_.replace(r"\ ", " ") for _ in generators] #can escape spaces with "\ "
+            tmpReq.setGen(generators)  #example: r"powheg\ gg_H_quark-mass-effects JHUGen\ v7.0.9"
         if fields[9] > -1:
             tmpReq.setFiltEff(row[fields[9]])
         elif not notCreate_:
