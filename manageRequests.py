@@ -17,6 +17,7 @@ import csv
 import pprint
 import time
 import urllib2
+import re
 import mcmscripts_config
 sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
 from rest import * # Load class to access McM
