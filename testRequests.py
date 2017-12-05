@@ -267,6 +267,10 @@ def getFields(csvfile):
             if list[24] > -1:
                 exitDuplicateField(file_in_, "Sequences magField")
             list[24] = ind
+        elif field in ['sequences nThreads']:
+            if list[25] > -1:
+                exitDuplicateField(file_in_, "Sequences nThreads")
+            list[25] = ind
         elif field in ['local gridpack location', 'Local lhe', 'lhe']:
             continue
         else:
@@ -336,6 +340,8 @@ def fillFields(csvfile, fields):
             tmpReq.setSequencesBeamspot(row[fields[23]])
         if fields[24] > -1:
             tmpReq.setSequencesMagField(row[fields[24]])
+        if fields[25] > -1:
+            tmpReq.setSequencesNThreads(row[fields[25]])
         requests.append(tmpReq)
     return requests, num_requests
 
