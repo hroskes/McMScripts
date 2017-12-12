@@ -157,7 +157,7 @@ def exitDuplicateField(file_in_,field_):
 def getFields(csvfile):
     # List of indices for each field in CSV file
     list = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-             -1, -1, -1, -1, -1, -1, -1, -1]
+             -1, -1, -1, -1, -1, -1, -1, -1, -1]
     header = csv.reader(csvfile).next()
     for ind, field in enumerate(header):
         field = field.lower()
@@ -271,6 +271,10 @@ def getFields(csvfile):
             if list[25] > -1:
                 exitDuplicateField(file_in_, "Sequences nThreads")
             list[25] = ind
+        elif field in ['Keep output']:
+            if list[26] > -1:
+                exitDuplicateField(file_in_, "Keep output")
+            list[26] = ind
         elif field in ['local gridpack location', 'Local lhe', 'lhe']:
             continue
         else:
@@ -342,6 +346,8 @@ def fillFields(csvfile, fields):
             tmpReq.setSequencesMagField(row[fields[24]])
         if fields[25] > -1:
             tmpReq.setSequencesNThreads(row[fields[25]])
+        if fields[26] > -1:
+            tmpReq.setKeepOutput(row[fields[26]])
         requests.append(tmpReq)
     return requests, num_requests
 

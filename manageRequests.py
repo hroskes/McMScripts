@@ -90,7 +90,7 @@ def exitDuplicateField(file_in_, field_):
 def getFields(csvfile_, file_in_):
     # List of indices for each field in CSV file
     list = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-             -1, -1, -1, -1, -1, -1, -1, -1]
+             -1, -1, -1, -1, -1, -1, -1, -1, -1]
     header = csv.reader(csvfile_).next()
     for ind, field in enumerate(header):
         field = field.lower()
@@ -199,6 +199,10 @@ def getFields(csvfile_, file_in_):
             if list[24] > -1:
                 exitDuplicateField(file_in_, "Sequences nThreads")
             list[24] = ind
+        elif field in ['keep output', 'keepoutput', 'keep_output']:
+            if list[25] > -1:
+                exitDuplicateField(file_in_, "Keep output")
+            list[25] = ind
         elif field in ['jobid', 'local gridpack location', 'local lhe', 'lhe']:
             continue
         else:
@@ -340,6 +344,8 @@ def fillFields(csvfile, fields, campaign, PWG, notCreate_, McMTags):
             tmpReq.setSequencesMagField(row[fields[23]])
         if fields[24] > -1:
             tmpReq.setSequencesNThreads(row[fields[24]])
+        if fields[25] > -1:
+            tmpReq.setKeepOutput(row[fields[25]])
         requests.append(tmpReq)
     return requests, num_requests
 
@@ -412,6 +418,8 @@ def createRequests(requests, num_requests, doDryRun, useDev):
                     mod_req['sequences'][0]['magField'] = reqFields.getSequencesMagField()
                 if reqFields.useSequencesNThreads():
                     mod_req['sequences'][0]['nThreads'] = reqFields.getSequencesNThreads()
+                if reqFields.useKeepOutput():
+                    mod_req['keep_output'][0] = reqFields.getKeepOutput()
                 # Update request with generator parameters and sequences
                 update_answer = mcm.updateA('requests', mod_req)
                 if update_answer['results']:
@@ -533,6 +541,8 @@ def modifyRequests(requests, num_requests, doDryRun, useDev, isLHErequest):
             mod_req['sequences'][0]['magField'] = reqFields.getSequencesMagField()
         if reqFields.useSequencesNThreads():
             mod_req['sequences'][0]['nThreads'] = reqFields.getSequencesNThreads()
+        if reqFields.useKeepOutput():
+            mod_req['keep_output'][0] = reqFields.getKeepOutput()
         if reqFields.useProcessString():
             mod_req['process_string'] = reqFields.getProcessString()
         if reqFields.useNotes():
@@ -621,6 +631,8 @@ def cloneRequests(requests, num_requests, doDryRun, useDev, cloneId_):
             clone_req['sequences'][0]['magField'] = reqFields.getSequencesMagField()
         if reqFields.useSequencesNThreads():
             clone_req['sequences'][0]['nThreads'] = reqFields.getSequencesNThreads()
+        if reqFields.useKeepOutput():
+            clone_req['keep_output'][0] = reqFields.getKeepOutput()
         if reqFields.useProcessString():
             clone_req['process_string'] = reqFields.getProcessString()
         if reqFields.useNotes():

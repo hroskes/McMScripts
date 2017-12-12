@@ -31,6 +31,7 @@ class Request:
         self.useSequencesBeamspot_  = False
         self.useSequencesMagField_  = False
         self.useSequencesNThreads_  = False
+        self.useKeepOutput_         = False
         self.useProcessString_      = False
         self.useJobID_              = False
         self.useNotes_              = False
@@ -99,6 +100,12 @@ class Request:
     def setSequencesNThreads(self,x):
         self.SequencesNThreads_ = x
         self.useSequencesNThreads_ = True
+    def setKeepOutput(self,x):
+        if x.lower() in ("1", "true", "t"): x = True
+        elif x.lower() in ("0", "false", "f"): x = False
+        else: raise ValueError("Unknown bool for setKeepOutput: "+x)
+        self.KeepOutput_ = x
+        self.useKeepOutput_ = True
     def setProcessString(self,x):
         self.ProcessString_ = x
         self.useProcessString_ = True
@@ -154,6 +161,8 @@ class Request:
         return self.SequencesMagField_
     def getSequencesNThreads(self):
         return self.SequencesNThreads_
+    def getKeepOutput(self):
+        return self.KeepOutput_
     def getProcessString(self):
         return self.ProcessString_
     def getJobID(self):
@@ -205,6 +214,8 @@ class Request:
         return self.useSequencesMagField_
     def useSequencesNThreads(self):
         return self.useSequencesNThreads_
+    def useKeepOutput(self):
+        return self.useKeepOutput_
     def useProcessString(self):
         return self.useProcessString_
     def useJobID(self):
